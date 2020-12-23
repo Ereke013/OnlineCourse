@@ -1,0 +1,61 @@
+﻿@model IEnumerable<OnlineCourse.Models.Payment>
+
+@{
+    ViewBag.Title = "Payment";
+}
+
+
+<div class="container ">
+    <div class="row mt-5 text-center">
+        <h1 style="margin-left: auto;margin-right: auto">Payments</h1>
+    </div>
+    <div class="row mt-2 text-left">
+        <a href="~/Payments/Create" type="button" class="btn btn-primary" style="">
+            +ADD NEW
+        </a>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Course NAME</th>
+                        <th>Price</th>
+                        <th>Student Name</th>
+                        <th>Date Of Pay</th>
+                        <th>DETAILS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @using OnlineCourse.Models;
+                    @using System.Data.Entity;
+                    @{ ApplicationDbContext dbContext = new ApplicationDbContext();
+                        List<ApplicationUser> users = dbContext.Users.ToList();
+                        }
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Cours.CourseName</td>
+                        <td>@item.Price.PriceCount</td>
+                        @foreach (ApplicationUser user in users)
+                        {
+                            if (user.Id == item.UserId)
+                            {
+                                <td>@user.FullName</td>
+                            }
+                        }
+
+                        <td>@item.DateOfPay</td>
+                        <td>
+                            <a href="~/Payments/Details/@item.Id"
+                               class="btn btn-info btn-sm">DETAILS</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

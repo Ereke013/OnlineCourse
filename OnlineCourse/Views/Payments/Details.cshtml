@@ -1,0 +1,27 @@
+﻿@model OnlineCourse.Models.Payment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1 class="display-4">@Model.Cours.CourseName</h1>
+        @using OnlineCourse.Models;
+        @using System.Data.Entity;
+        @{ ApplicationDbContext dbContext = new ApplicationDbContext();
+            ApplicationUser user = dbContext.Users.FirstOrDefault(u => u.Id == Model.UserId);
+        }
+        <p class="lead">User: @user.FullName</p>
+        @{ var longDateValue = Model.DateOfPay.ToLongDateString();}
+        <p class="lead">@longDateValue</p>
+        <hr class="my-4">
+        <p>@Model.Price.PriceCount tenge</p>
+        <a class="btn btn-primary" class="form-control" href="/Payments/Edit/@Model.Id" role="button">Edit</a>
+        <a class="btn btn-danger" class="form-control" href="/Payments/Delete/@Model.Id" role="button">Delete</a>
+    </div>
+</div>
+

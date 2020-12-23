@@ -1,0 +1,42 @@
+﻿@model IEnumerable<OnlineCourse.Models.Price>
+
+@{
+    ViewBag.Title = "Price";
+}
+
+<div class="container ">
+    <div class="row mt-5 text-center">
+        <h1 style="margin-left: auto;margin-right: auto">Price</h1>
+    </div>
+    <div class="row mt-2 text-left">
+        <a href="Prices/Create" type="button" class="btn btn-primary" style="">
+            +ADD NEW
+        </a>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Price</th>
+                        <th>DETAILS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.PriceCount tenge</td>
+                            <td>
+                                <a href="Prices/Details/@item.Id"
+                                   class="btn btn-info btn-sm">DETAILS</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

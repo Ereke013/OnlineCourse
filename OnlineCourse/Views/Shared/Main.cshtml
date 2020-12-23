@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="~/Content/style.css" />
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="@Url.Content("~/scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    @Scripts.Render("~/scripts/jquery-3.4.1.min.js")
+
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title</title>
+</head>
+<body style="padding: 0; margin: 0; background-color:cadetblue">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a href="/Home/Welcome" class="navbar-brand" style="font-size: 27px">
+            <strong>
+                <span class="logo_square">CIT</span><span class="logo_green">_DEV</span>
+            </strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item mr-3">@Html.ActionLink("Home", "Welcome", "Home")</li>
+                <li class="nav-item mr-3">@Html.ActionLink("Category", "Categories", "Home")</li>
+                <li class="nav-item mr-3">@Html.ActionLink("All courses", "Courses", "Home")</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item">@Html.ActionLink("My courses", "myCourses", "Home")</li>
+                    <li class="nav-item"><a href="~/Home/myCourses/@User.Identity.Name"></a></li>
+                }
+
+            </ul>
+            @*<form class="form-inline mt-2 mt-md-0">
+                    <a href="#"><i class="fas fa-shopping-cart mr-5" style="color:wheat"></i></a>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <a href="~/Cours/Index" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
+                </form>*@
+            <ul class="nav navbar-nav navbar-right">
+                @using Microsoft.AspNet.Identity
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @using OnlineCourse.Models;
+                                @using System.Data.Entity;
+                                @using Microsoft.AspNet.Identity;
+                                @using Microsoft.AspNet.Identity.EntityFramework;
+                                @using Microsoft.AspNet.Identity.Owin;
+                                @{ ApplicationDbContext dbContext = new ApplicationDbContext();
+                                    List<ApplicationUser> users = dbContext.Users.ToList();
+                                    ////List<IdentityRole> roles = dbContext.Roles.ToList();
+                                    //var roleStore = new RoleStore<IdentityRole>(dbContext);
+                                    //var roleMngr = new RoleManager<IdentityRole>(roleStore);
+
+                                    var us = dbContext.Users.Include(u => u.Roles).ToList();
+                                    var dd = dbContext.Roles.FirstOrDefault(d => d.Name == "admin");
+                                }
+                                @foreach (ApplicationUser user in users)
+                                {
+                                    if (User.Identity.Name == user.UserName)
+                                    {
+                                        foreach (var ii in user.Roles)
+                                        {
+                                            if (ii.RoleId == dd.Id)
+                                            {
+                                                <a href="~/Index/Cours" class="mr-3 btn btn-secondary">Admin</a>
+                                            }
+                                        }
+
+                                        <a href="~/Manage/Index" class="mr-3">@user.FullName</a>
+                                    }
+                                }
+                                @*@Html.ActionLink("Здравствуйте " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                            </li>
+                            <li><a class="btn btn-danger" href="javascript:document.getElementById('logoutForm').submit()">Выйти <i class="ml-2 fas fa-sign-out-alt"></i></a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <a href="~/Account/Register" class="btn btn-primary mr-3">Register</a>
+                    <a href="~/Account/Login" class="btn btn-success">LogIn</a>
+                }
+
+                @*<li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+                @*<li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+            </ul>
+        </div>
+    </nav>
+    <div class="body-content mt-3">
+        @RenderBody()
+        @RenderSection("scripts", required: false)
+        <hr />
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - мое приложение ASP.NET</p>
+            </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@RenderSection("scripts", required: false)*@
+</body>
+</html>
+
+

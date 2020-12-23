@@ -1,0 +1,44 @@
+﻿@model  OnlineCourse.Models.CourseDep
+
+
+@{
+    Layout = "~/Views/Shared/Main.cshtml";
+}
+@{
+    ViewBag.Title = "Category";
+}
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("p").toggle();
+        });
+    });
+</script>
+
+<div class="container">
+    <h2 style="text-align:center">Categories</h2>
+    <div class="row mt-5">
+
+        @foreach (var item in Model.depData)
+        {
+            <div class="col-4">
+                <div class="card-title"><button class="btn btn-success">@item.DepartmentName </button> </div>
+                <div class="card-body">
+                    @foreach (var cours in Model.courseData)
+                    {
+                        <p style="font-size:17px">
+                            <strong>
+                                <a href="#" style="color:aliceblue">
+                                    @if (item.Id == cours.DepartmentId)
+                                    {@cours.CourseName}
+                                </a>
+                            </strong>
+                        </p>
+                    }
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+

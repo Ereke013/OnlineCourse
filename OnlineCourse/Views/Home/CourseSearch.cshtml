@@ -1,0 +1,59 @@
+﻿@model IEnumerable<OnlineCourse.Models.Cours>
+
+@{
+    Layout = "~/Views/Shared/Main.cshtml";
+}
+
+@{
+    ViewBag.Title = "Course";
+}
+<h2 class="text-center">All Courses</h2>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myDIV *").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>*@
+<div class="container">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <form action="~/Home/CourseSearch" method="post">
+                    <div class="form-group">
+                        <input type="text" id="myInput" class="form-control" " name="name" />
+
+                    </div>
+
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-sm-10 offset-1 mt-2">
+    <div class="row" id="myDIV">
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 mt-3">
+                <div class="card">
+                    <div class="card-header">@item.CourseName</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.CourseName</h5>
+                        <p class="card-text">Level : @item.CourseLevel.LevelName. Course duration: @item.Course_Duration month</p>
+                        <a href="Details/@item.Id"
+                           class="btn btn-info btn-sm">DETAILS</a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

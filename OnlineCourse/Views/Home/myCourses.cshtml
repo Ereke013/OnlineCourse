@@ -1,0 +1,53 @@
+﻿@model IEnumerable<OnlineCourse.Models.CourseSelection>
+
+@{
+    Layout = "~/Views/Shared/Main.cshtml";
+}
+
+@{
+    ViewBag.Title = "My Courses";
+}
+
+<h2 style="text-align:center">My Courses</h2>
+
+@using OnlineCourse.Models;
+@using System.Data.Entity;
+@{ ApplicationDbContext dbContext = new ApplicationDbContext();
+    Model1 con = new Model1(); 
+    List<ApplicationUser> users = dbContext.Users.ToList();
+}
+<div class="col-sm-12 mt-4">
+    <div class="row">
+        
+        @foreach (ApplicationUser user in users)
+        {
+            if (User.Identity.Name == user.UserName)
+            {
+                foreach (var cor in Model)
+                {
+                    if (cor != null)
+                    {
+                        if (cor.Payment.UserId == user.Id)
+                        {
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <h5 class="card-header">@cor.Payment.Cours.CourseName</h5>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Level: @cor.Payment.Cours.CourseLevel.LevelName</h5>
+                                        @{ var longDateValue = cor.Payment.DateOfPay.ToLongDateString();}
+                                        <p class="card-text">Start Date: @longDateValue</p>
+                                        <p class="card-text">End Date: Через @cor.Payment.Course_Duration месяц</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
+    </div>
+</div>

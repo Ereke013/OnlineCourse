@@ -1,0 +1,84 @@
+﻿@model IEnumerable<OnlineCourse.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "allUsers";
+}
+
+<h2>allUsers</h2>
+
+<div class="container ">
+    <div class="row mt-5 text-center">
+        <h1 style="margin-left: auto;margin-right: auto">ALL USERS</h1>
+    </div>
+    <div class="row mt-2 text-left">
+        <a href="~/Account/Create" type="button" class="btn btn-primary" style="">
+            +ADD NEW
+        </a>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>EMAIL</th>
+                        <th>USERNAME</th>
+                        <th>FULL NAME</th>
+                        <th>DETAILS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1;}
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            @*<td>@user.Id</td>*@
+                            <td>@i</td>
+                            <td>@user.Email</td>
+                            <td>@user.UserName</td>
+                            <td>@user.FullName</td>
+                            <td>
+                                <a href="~/Account/Edit/@user.Id"
+                                   class="btn btn-danger btn-sm">EDIT</a>
+                            </td>
+                        </tr>
+                        { i++; }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@

@@ -1,0 +1,21 @@
+﻿@model OnlineCourse.Models.Cours
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2>Details</h2>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>@Model.CourseName , @Model.CourseLevel.LevelName level</h2>
+        <p class="lead">@Model.Department.DepartmentName</p>
+        <hr class="my-4">
+        <p>Duration @Model.Course_Duration month</p>
+        <a class="btn btn-primary btn-lg" href="~/Cours/Edit/@Model.Id" role="button">Edit</a>
+
+    </div>
+    <a href="~/Cours/Index" class="btn btn-success">Back to List</a>
+    <a class="btn btn-danger" href="~/Cours/Delete/@Model.Id" role="button">Delete</a>
+</div>

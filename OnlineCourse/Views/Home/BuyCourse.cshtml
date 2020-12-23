@@ -1,0 +1,143 @@
+﻿@model IEnumerable<OnlineCourse.Models.Cours>
+
+@{
+    Layout = "~/Views/Shared/Main.cshtml";
+}
+
+@{
+    ViewBag.Title = "Course";
+}
+<h2 class="text-center">All Courses</h2>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myDIV *").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });x
+    </script>*@
+<div class="container">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <form action="~/Home/CourseSearch" method="post">
+                    <div class="form-group">
+                        <input type="text" id="myInput" class="form-control" " name="name" />
+
+                    </div>
+
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-sm-10 offset-1 mt-2">
+    <div class="row" id="myDIV">
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 mt-3">
+                <div class="card">
+                    <div class="card-header">@item.CourseName</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.CourseName</h5>
+                        <p class="card-text">Level : @item.CourseLevel.LevelName. Course duration: @item.Course_Duration month</p>
+                        <a href="~/Home/Details/@item.Id" class="btn btn-info btn-sm">DETAILS</a>
+                        <a data-toggle="modal" data-target="#staticBackdrop" data-courseId="@item.Id" class="btn btn-success btn-sm">BUY</a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+<form action="~/Home/BuyCourse" method="post">
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="staticBackdropLabel">
+                        <div class="row">
+                            <div class="col-sm-2 text-center">
+                                <i class="fab fa-cc-apple-pay" style="font-size: 2.5em;"></i>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <i class="fab fa-cc-amazon-pay " style="font-size: 2.5em;"></i>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <i class="fab fa-cc-amex" style="font-size: 2.5em;"></i>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <i class="fab fa-cc-mastercard" style="font-size: 2.5em;"></i>
+                            </div>
+                            <div class="col-sm-2 text-center">
+                                <i class="fab fa-cc-visa" style="font-size: 2.5em;"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="UserId" value="@User.Identity.Name" />
+                <input type="hidden" name="CourseId" id="courseId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Full Name <span style="color: red">*</span></label>
+                        <input type="text" name="full_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number <span style="color: red">*</span></label>
+                        <input type="text" name="card_num" class="form-control" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label> Expiration (MM/YY) <span style="color: red">*</span></label>
+                                <input type="text" name="expiration" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label> CVV <span style="color: red">*</span></label>
+                                <input type="text" name="cvv" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    $('#editCom').on("show.bs.modal", function (event) {
+        var button = $(event.relatedTarget);
+        var courseId = button.data('courseId');
+        //var name = button.data('name');
+        // var itemId = button.data('itemsID');
+        var modal = $(this);
+
+        modal.find('.modal-body input#courseId').val(courseId);
+        //modal.find('.modal-body input#name').val(name);
+        // modal.find('.modal-body input#itemsID').val(itemId);
+        // modal.find('.modal-content button.delecity').val(id);
+    });
+
+</script>

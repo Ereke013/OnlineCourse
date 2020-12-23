@@ -1,0 +1,88 @@
+﻿@*@model IEnumerable<CW.Models.Courses>*@
+
+@{
+    Layout = "~/Views/Shared/Main.cshtml";
+}
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<section class="pt-4 pt-md-11" style="height:500px">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-5 col-lg-6 order-md-2">
+
+                <!-- Image -->
+                <img src="https://minutes.dynamiteapps.io/assets/img/illustrations/illustration-2.png" class="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 aos-init aos-animate" alt="..." data-aos="fade-up" data-aos-delay="100">
+
+            </div>
+            <div class="col-12 col-md-7 col-lg-6 order-md-1 aos-init aos-animate" data-aos="fade-up">
+
+                <!-- Heading -->
+                <h1 class="display-4 text-center text-md-left">
+                    Welcome to <span style="color:green">Cit</span><span style="color:white">Dev</span>. <br>
+                    Develop anything with us.
+                </h1>
+
+                <!-- Text -->
+                <p class="lead text-center text-md-left mb-6 mb-lg-8" style="color:white">
+                    Explore popular programming languages.Working with the team.
+                </p>
+
+                <!-- Buttons -->
+                <div class="text-center text-md-left">
+                    <a href="overview.html" class="btn btn-primary shadow lift mr-1">
+                        View all pages <i class="fe fe-arrow-right d-none d-md-inline ml-3"></i>
+                    </a>
+                    <a href="docs/index.html" class="btn btn-primary-soft lift">
+                        Documentation
+                    </a>
+                </div>
+
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</section>
+
+<section class="animation_liveaction mt-5" style="background-color:aliceblue">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="text-align:center">
+                <img src="https://www.animaker.com/static/assets/images/animakerhome/animation_feature_img_v1.png" style="width:100%;">
+                <h3>Animation</h3>
+                <p class="">Create Eye-Popping <br>Animation Videos in just a few clicks</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12" style="text-align:center">
+                <img src="https://www.animaker.com/static/assets/images/animakerhome/live_action_img.png" style="width:100%;">
+                <h3>Team work</h3>
+                <p class="">Discuss, share your opinion <br>Just Develop</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<div class="col-sm-10 offset-1 mt-3">
+        <div class="row">
+            @{ int i = 0;}
+            @foreach (var item in Model)
+            {
+                if (i < 3)
+                {
+                    <div class="col-sm-4 mt-3">
+                        <div class="card">
+                            <div class="card-header">@item.Course_Name</div>
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Course_Name</h5>
+                                <p class="card-text">Level : @item.CourseLevel.Level_Name. Course duration: @item.CourseDuration month</p>
+                                <a href="~/Home/Details/@item.Id"
+                                   class="btn btn-info btn-sm">DETAILS</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    i++;
+                }
+            }
+        </div>
+    </div>*@
